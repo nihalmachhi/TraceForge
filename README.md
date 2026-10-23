@@ -4,6 +4,22 @@ A local observability and regression-testing project for AI agents. It captures 
 
 Synthetic demo only: the bundled agent is deterministic and makes no external model calls. Its scores illustrate workflow, not real-world model quality.
 
+## How it works
+
+TraceForge records a deterministic agent run as nested spans, then compares prompt versions against the same fixed evaluation cases.
+
+```mermaid
+flowchart LR
+  A[Fixed task cases] --> B[Deterministic demo agent]
+  B --> C[Nested retrieval, tool, and model spans]
+  C --> D[Redact sensitive-looking values]
+  D --> E[SQLite trace store]
+  E --> F[Task, quality, and cost comparison]
+  F --> G[Dashboard and regression gate]
+```
+
+The bundled agent makes no external model calls. A demo run records a baseline and an intentionally regressed candidate; the gate compares them with configured thresholds and can fail a CI command when quality drops too far. Demo costs and scores are illustrative only.
+
 ## Run locally
 
 Requires Python 3.11 or newer; runtime uses the standard library.
@@ -32,3 +48,4 @@ GET /api/health, GET /api/summary, GET /api/traces, GET /api/traces/{trace_id}, 
 ## Limits
 
 The evaluator is deterministic, not an LLM judge. Sample costs are illustrative, not provider pricing. Redaction is best effort. The local server has no authentication. No production integration or load benchmark is claimed. See docs/ for architecture, schema, evaluators, CI, privacy, and walkthrough.
+
