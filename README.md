@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/readme-icon.png" alt="TraceForge icon" width="112" />
+</p>
+
 # TraceForge
 
 A local observability and regression-testing project for AI agents. It captures nested spans around retrieval, tools, and model calls; redacts sensitive-looking fields before persistence; evaluates prompt versions on the same fixed dataset; and shows comparisons in a dashboard and CI-style command.
