@@ -13,13 +13,18 @@ Synthetic demo only: the bundled agent is deterministic and makes no external mo
 TraceForge records a deterministic agent run as nested spans, then compares prompt versions against the same fixed evaluation cases.
 
 ```mermaid
-flowchart LR
-  A[Fixed task cases] --> B[Deterministic demo agent]
-  B --> C[Nested retrieval, tool, and model spans]
-  C --> D[Redact sensitive-looking values]
-  D --> E[SQLite trace store]
-  E --> F[Task, quality, and cost comparison]
-  F --> G[Dashboard and regression gate]
+flowchart TD
+  A[Fixed evaluation cases] --> B[Baseline or candidate prompt version]
+  B --> C[Deterministic demo agent]
+  C --> D[Nested spans for retrieval, tools, and model steps]
+  D --> E[Redact sensitive-looking values]
+  E --> F[(SQLite trace store)]
+  F --> G[Compare task success, quality, and illustrative cost]
+  G --> H[Threshold-based regression gate]
+  H --> I[CLI exit result for CI]
+  F --> J[Trace and comparison API]
+  G --> J
+  J --> K[Dashboard]
 ```
 
 The bundled agent makes no external model calls. A demo run records a baseline and an intentionally regressed candidate; the gate compares them with configured thresholds and can fail a CI command when quality drops too far. Demo costs and scores are illustrative only.
