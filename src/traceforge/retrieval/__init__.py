@@ -1,0 +1,1 @@
+"""Dependency-free retrieval helpers."""

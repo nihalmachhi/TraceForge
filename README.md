@@ -51,7 +51,8 @@ Demo reruns replace only traces tagged traceforge_sample_v1. Other traces are pr
 
 ## API
 
-GET /api/health, GET /api/summary, GET /api/traces, GET /api/traces/{trace_id}, and POST /api/demo/rerun.
+GET /api/health, GET /api/summary, GET /api/traces?limit=100&offset=0,
+GET /api/traces/{trace_id}, and POST /api/demo/rerun.
 
 ## Limits
 

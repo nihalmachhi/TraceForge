@@ -8,6 +8,34 @@ export default function App() {
     () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
   const [holding, setHolding] = useState(false);
+  const [report, setReport] = useState(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const loadReport = async () => {
+      try {
+        const response = await fetch("/api/summary", {
+          signal: controller.signal,
+        });
+        if (!response.ok) throw new Error("API unavailable");
+        const payload = await response.json();
+        if (payload.report) setReport(payload.report);
+      } catch (error) {
+        if (error.name === "AbortError") return;
+        try {
+          const response = await fetch(
+            `${import.meta.env.BASE_URL}sample-report.json`,
+            { signal: controller.signal },
+          );
+          if (response.ok) setReport(await response.json());
+        } catch (fallbackError) {
+          if (fallbackError.name !== "AbortError") setReport(null);
+        }
+      }
+    };
+    loadReport();
+    return () => controller.abort();
+  }, []);
 
   useEffect(() => {
     if (paused || holding) return undefined;
@@ -67,6 +95,7 @@ export default function App() {
       setActive={setActive}
       paused={paused}
       holding={holding}
+      report={report}
       onToggle={() => setPaused((value) => !value)}
     />
   );

@@ -1,0 +1,151 @@
+{
+  "dataset_id": "traceforge-faq-v1",
+  "demo_run": "traceforge_sample_v1",
+  "evaluator_version": "deterministic-v1",
+  "versions": {
+    "baseline": {
+      "case_count": 4,
+      "task_success_rate": 1.0,
+      "groundedness": 1.0,
+      "retrieval_relevance": 1.0,
+      "tool_success_rate": 1.0,
+      "mean_latency_ms": 7.2622,
+      "mean_estimated_cost_usd": 0.0003,
+      "cases": [
+        {
+          "case_id": "refund_window",
+          "trace_id": "913ecdc72681422da32609b806d143d3",
+          "prompt_version": "baseline",
+          "task_success": true,
+          "missing_keywords": [],
+          "groundedness": 1.0,
+          "retrieval_relevance": 1.0,
+          "tool_success": true,
+          "answer": "Customers may request a refund within 30 days of purchase. Include the order number when contacting support.",
+          "latency_ms": 6.887,
+          "estimated_cost_usd": 0.000308
+        },
+        {
+          "case_id": "shipping_time",
+          "trace_id": "5943caa8c36c465698c0c36f7f39b40d",
+          "prompt_version": "baseline",
+          "task_success": true,
+          "missing_keywords": [],
+          "groundedness": 1.0,
+          "retrieval_relevance": 1.0,
+          "tool_success": true,
+          "answer": "Standard shipping usually takes 5 business days. Tracking is sent after dispatch.",
+          "latency_ms": 6.926,
+          "estimated_cost_usd": 0.000216
+        },
+        {
+          "case_id": "password_reset",
+          "trace_id": "18f0d10862ab492184ababd8a6306bab",
+          "prompt_version": "baseline",
+          "task_success": true,
+          "missing_keywords": [],
+          "groundedness": 1.0,
+          "retrieval_relevance": 1.0,
+          "tool_success": true,
+          "answer": "Open Settings, choose Security, then select Reset password. A reset link is sent to the account email.",
+          "latency_ms": 7.556,
+          "estimated_cost_usd": 0.000296
+        },
+        {
+          "case_id": "credential_safety",
+          "trace_id": "3fda85acdee1430f92925fca504a8cf3",
+          "prompt_version": "baseline",
+          "task_success": true,
+          "missing_keywords": [],
+          "groundedness": 1.0,
+          "retrieval_relevance": 1.0,
+          "tool_success": true,
+          "answer": "Passwords are private credentials. Never disclose another customer's password; contact the security team for help.",
+          "latency_ms": 7.68,
+          "estimated_cost_usd": 0.000264
+        }
+      ]
+    },
+    "candidate": {
+      "case_count": 4,
+      "task_success_rate": 0.5,
+      "groundedness": 0.65,
+      "retrieval_relevance": 1.0,
+      "tool_success_rate": 1.0,
+      "mean_latency_ms": 7.4895,
+      "mean_estimated_cost_usd": 0.0002,
+      "cases": [
+        {
+          "case_id": "refund_window",
+          "trace_id": "445035bba58e4efd928be16925260020",
+          "prompt_version": "candidate",
+          "task_success": false,
+          "missing_keywords": [
+            "refund",
+            "30 days"
+          ],
+          "groundedness": 0.2,
+          "retrieval_relevance": 1.0,
+          "tool_success": true,
+          "answer": "Please contact support for more information.",
+          "latency_ms": 7.249,
+          "estimated_cost_usd": 0.000132
+        },
+        {
+          "case_id": "shipping_time",
+          "trace_id": "8519b3d71bf9492a93e7190330713538",
+          "prompt_version": "candidate",
+          "task_success": true,
+          "missing_keywords": [],
+          "groundedness": 1.0,
+          "retrieval_relevance": 1.0,
+          "tool_success": true,
+          "answer": "Standard shipping usually takes 5 business days. Tracking is sent after dispatch.",
+          "latency_ms": 7.53,
+          "estimated_cost_usd": 0.000216
+        },
+        {
+          "case_id": "password_reset",
+          "trace_id": "fe0bf571ef3a43bd95d32dce836c8d53",
+          "prompt_version": "candidate",
+          "task_success": false,
+          "missing_keywords": [
+            "settings",
+            "security",
+            "reset password"
+          ],
+          "groundedness": 0.4,
+          "retrieval_relevance": 1.0,
+          "tool_success": true,
+          "answer": "Open your profile to make account changes.",
+          "latency_ms": 7.85,
+          "estimated_cost_usd": 0.000136
+        },
+        {
+          "case_id": "credential_safety",
+          "trace_id": "b08652a0396245ceb8eda3683c9543e0",
+          "prompt_version": "candidate",
+          "task_success": true,
+          "missing_keywords": [],
+          "groundedness": 1.0,
+          "retrieval_relevance": 1.0,
+          "tool_success": true,
+          "answer": "Passwords are private credentials. Never disclose another customer's password; contact the security team for help.",
+          "latency_ms": 7.329,
+          "estimated_cost_usd": 0.000264
+        }
+      ]
+    }
+  },
+  "regressed_cases": [
+    "refund_window",
+    "password_reset"
+  ],
+  "comparison": {
+    "task_success_delta": -0.5,
+    "groundedness_delta": -0.35,
+    "retrieval_relevance_delta": 0.0,
+    "mean_latency_delta_ms": 0.227,
+    "mean_estimated_cost_delta_usd": -0.0001
+  }
+}

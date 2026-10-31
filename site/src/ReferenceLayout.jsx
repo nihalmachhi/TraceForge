@@ -6,7 +6,13 @@ export default function ReferenceLayout({
   setActive,
   paused,
   onToggle,
+  report,
 }) {
+  const caseCount = report?.versions?.baseline?.case_count ?? 4;
+  const taskDelta = report?.comparison?.task_success_delta ?? -0.5;
+  const groundednessDelta = report?.comparison?.groundedness_delta ?? -0.35;
+  const gateStatus =
+    taskDelta < 0 || groundednessDelta < -0.05 ? "fail" : "pass";
   return (
     <>
       {" "}
@@ -125,11 +131,13 @@ export default function ReferenceLayout({
               </div>
               <div className={"it"}>
                 {"Cases "}
-                <span>{"4"}</span>
+                <span>{caseCount}</span>
               </div>
               <div className={"it"}>
                 {"Gate "}
-                <span className={"no"}>{"fail"}</span>
+                <span className={gateStatus === "fail" ? "no" : ""}>
+                  {gateStatus}
+                </span>
               </div>{" "}
               <h4>{"Prompt versions"}</h4>
               <div className={"it f"} style={{ "--c": "var(--ok)" }}>
