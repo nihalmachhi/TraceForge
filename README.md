@@ -30,6 +30,10 @@ Requires Python 3.11 or newer; runtime uses the standard library.
 
     py -3 -m venv .venv
     .\.venv\Scripts\Activate.ps1
+    cd site
+    npm ci
+    npm run build
+    cd ..
     .\scripts\run.ps1 demo
     .\scripts\run.ps1 serve
 
