@@ -16,7 +16,7 @@ openai = []
 anthropic = []
 ollama = []
 otlp = []
-docs = ["reportlab>=4.2"]
+docs = ["reportlab>=5.1.0"]
 dev = ["mypy>=1.11", "pytest>=8.3", "pytest-cov>=5.0", "ruff>=0.6"]
 
 [project.scripts]
