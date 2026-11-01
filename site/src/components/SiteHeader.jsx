@@ -11,22 +11,19 @@ const LINKS = [
 
 const GITHUB_URL = "https://github.com/nihalmachhi/TraceForge";
 
+const ICON_URL = `${import.meta.env.BASE_URL}icon.png`;
+
 export function Brand({ withIcon = true }) {
   return (
     <a className="brand" href="#top">
       {withIcon && (
-        <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
-          <rect x="2" y="3" width="18" height="3.4" rx="1.7" fill="#f4f4f5" />
-          <rect x="6" y="9.3" width="14" height="3.4" rx="1.7" fill="#8c8c95" />
-          <rect
-            x="10"
-            y="15.6"
-            width="10"
-            height="3.4"
-            rx="1.7"
-            fill="#ff7a45"
-          />
-        </svg>
+        <img
+          className="brand-icon"
+          src={ICON_URL}
+          alt=""
+          width="22"
+          height="22"
+        />
       )}
       TraceForge
     </a>

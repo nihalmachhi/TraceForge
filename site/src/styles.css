@@ -65,6 +65,13 @@ nav.top {
   text-decoration: none;
   letter-spacing: -0.02em;
 }
+.brand-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  display: block;
+  flex: none;
+}
 .links {
   display: flex;
   gap: 24px;
