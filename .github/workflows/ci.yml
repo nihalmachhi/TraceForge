@@ -29,7 +29,21 @@ jobs:
       - run: python -m ruff check src tests scripts
       - run: python -m ruff format --check src tests scripts
       - run: python -m mypy --strict src
-      - run: python -m pytest --cov --cov-report=xml --cov-fail-under=85
+      - name: Tests
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pytest -q --cov --cov-report=xml --cov-fail-under=85 2>&1 \
+            | tee pytest-output.txt
+      - name: Publish pytest failures as annotations
+        if: failure()
+        shell: bash
+        run: |
+          if [ -f pytest-output.txt ]; then
+            tail -n 80 pytest-output.txt | while IFS= read -r line; do
+              echo "::error::$line"
+            done
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:

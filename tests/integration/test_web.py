@@ -13,6 +13,7 @@ def test_server_routes_static_files_and_empty_report(tmp_path, monkeypatch) -> N
     (site / "assets").mkdir(parents=True)
     (site / "index.html").write_text("<h1>TraceForge</h1>", encoding="utf-8")
     (site / "assets" / "app.js").write_text("const ok = true;", encoding="utf-8")
+    (site / "assets" / "styles.css").write_text("body { margin: 0; }", encoding="utf-8")
     monkeypatch.setattr("traceforge.api.app.DB", tmp_path / "traces.sqlite3")
     monkeypatch.setattr("traceforge.api.app.REPORT", tmp_path / "missing-report.json")
     monkeypatch.setattr("traceforge.api.app.SITE", site)
@@ -26,7 +27,9 @@ def test_server_routes_static_files_and_empty_report(tmp_path, monkeypatch) -> N
             assert response.status == 200
             assert b"TraceForge" in response.read()
         with urlopen(f"{origin}/assets/app.js") as response:
-            assert response.headers["Content-Type"].startswith("text/javascript")
+            assert response.headers["Content-Type"] == "text/javascript; charset=utf-8"
+        with urlopen(f"{origin}/assets/styles.css") as response:
+            assert response.headers["Content-Type"] == "text/css; charset=utf-8"
         with urlopen(f"{origin}/api/health") as response:
             assert json.load(response)["status"] == "ok"
         with urlopen(f"{origin}/api/summary") as response:

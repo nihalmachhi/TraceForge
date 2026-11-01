@@ -11,6 +11,24 @@ from traceforge.config import DB, REPORT, SITE
 from traceforge.evaluation import gate, run_demo
 from traceforge.storage.sqlite import SQLiteTraceStore
 
+# Serve known dashboard assets with deterministic MIME types. Windows `mimetypes`
+# reads the registry, where `.js` is sometimes mapped to `text/plain`.
+CONTENT_TYPES = {
+    ".css": "text/css; charset=utf-8",
+    ".html": "text/html; charset=utf-8",
+    ".ico": "image/x-icon",
+    ".js": "text/javascript; charset=utf-8",
+    ".json": "application/json; charset=utf-8",
+    ".map": "application/json; charset=utf-8",
+    ".mjs": "text/javascript; charset=utf-8",
+    ".png": "image/png",
+    ".svg": "image/svg+xml",
+    ".txt": "text/plain; charset=utf-8",
+    ".webmanifest": "application/manifest+json; charset=utf-8",
+    ".woff": "font/woff",
+    ".woff2": "font/woff2",
+}
+
 
 def factory(repository: SQLiteTraceStore | None = None) -> type[BaseHTTPRequestHandler]:
     store = repository or SQLiteTraceStore(DB)
@@ -43,12 +61,15 @@ def factory(repository: SQLiteTraceStore | None = None) -> type[BaseHTTPRequestH
                 self.send_json({"error": message}, status)
                 return
             body = target.read_bytes()
-            content_type = mimetypes.guess_type(target.name)[0] or "application/octet-stream"
-            if content_type.startswith("text/") or content_type in {
-                "application/javascript",
-                "application/json",
-            }:
-                content_type += "; charset=utf-8"
+            content_type = CONTENT_TYPES.get(target.suffix.lower())
+            if content_type is None:
+                guessed = mimetypes.guess_type(target.name)[0] or "application/octet-stream"
+                content_type = guessed
+                if guessed.startswith("text/") or guessed in {
+                    "application/javascript",
+                    "application/json",
+                }:
+                    content_type += "; charset=utf-8"
             self.send_response(200)
             self.send_header("Content-Type", content_type)
             self.send_header("X-Content-Type-Options", "nosniff")

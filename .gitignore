@@ -1,6 +1,8 @@
 __pycache__/
 *.py[cod]
 *.egg-info/
+build/
+dist/
 .venv/
 .env
 .env.*
@@ -10,6 +12,7 @@ data/generated/*
 output/
 *.sqlite3
 .coverage
+coverage.xml
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/

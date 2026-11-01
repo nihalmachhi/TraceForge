@@ -25,6 +25,9 @@ traceforge = "traceforge.cli.commands:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+traceforge = ["data/*.json"]
+
 [tool.ruff]
 line-length = 100
 src = ["src"]
